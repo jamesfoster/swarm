@@ -1,0 +1,52 @@
+<html>
+  <head>
+  <script type="text/javascript" src="jquery.js"></script>  
+  <script type="text/javascript" src="jquery.bind.js"></script>  
+  <script type="text/javascript" src="inheritance.js"></script>
+  <script type="text/javascript" src="neuralnet.js"></script>
+  <script type="text/javascript" src="genome.js"></script>
+  <script type="text/javascript" src="boids.js"></script>
+  <script type="text/javascript" src="colony.js"></script>
+  
+   <script type="application/javascript"> 
+
+	var antFarm = new AntFarm(20, 10, 500, 500); 
+	
+	function draw() {
+		var canvas = $("#canvas")[0];
+		var ctx = canvas.getContext("2d");
+		
+		ctx.fillStyle = "black";
+		ctx.fillRect(0, 0, canvas.width, canvas.height);
+		
+		antFarm.draw(ctx);
+		
+		$("#generations").html(antFarm.geneticAlgorithm.generations);
+		$("#bestFitness").html(antFarm.geneticAlgorithm.bestFitness);
+		$("#worstFitness").html(antFarm.geneticAlgorithm.worstFitness);
+		$("#avgFitness").html(antFarm.geneticAlgorithm.averageFitness);
+		$("#ticks").html(1000 - antFarm.ticks);
+	}
+
+    </script>
+  </head>
+  <body onload="draw()">
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <div id="buttons">
+      <span class="button" onclick="antFarm.run(draw)">Start</span>&nbsp;
+      <span class="button" onclick="antFarm.stop()">Stop</span>&nbsp;
+      <span class="button" onclick="antFarm.stop(); antFarm = new AntFarm(20, 10, 500, 500); draw();">Reset</span>
+      <br>
+      <span class="button" onclick="antFarm.setInterval(5)">Fast</span>&nbsp;
+      <span class="button" onclick="antFarm.setInterval(30)">Slow</span>&nbsp;
+    </div>
+    
+    <div id="stats">
+      Generation: <span id="generations"></span><br/>
+      Best Fitness: <span id="bestFitness"></span><br/>
+      Worst Fitness: <span id="worstFitness"></span><br/>
+      Average Fitness: <span id="avgFitness"></span><br/>
+      Next Generation: <span id="ticks"></span><br/>
+    </div>
+  </body>
+ </html>
